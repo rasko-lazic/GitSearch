@@ -17,19 +17,28 @@
             </div>
         </div>
 
-        <div class="container saved-results-container">
-
+        <div class="container saved-results-container" v-show="savedRepos.length > 0">
+            <div class="col-md-10 col-md-offset-1">
+                <repo-table :repos="savedRepos"></repo-table>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import repoTable from '../components/repoTable.vue'
+
     export default {
         name: 'home',
 
+        components: {
+            repoTable
+        },
+
         data () {
             return {
-                searchQuery: ''
+                searchQuery: '',
+                savedRepos: []
             }
         },
 
@@ -44,7 +53,10 @@
         },
 
         created() {
-            console.log('created');
+            let savedRepos = JSON.parse(localStorage.getItem("savedRepos"))
+            if(savedRepos != null && savedRepos.length > 0) {
+                this.savedRepos = savedRepos;
+            }
         }
     }
 </script>
@@ -52,6 +64,10 @@
 <style scoped>
     .search-input-container {
         margin-top: 150px;
+    }
+
+    .saved-results-container {
+        margin-top: 100px;
     }
 
     .btn-search {

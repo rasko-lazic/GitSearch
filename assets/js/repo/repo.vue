@@ -4,6 +4,10 @@
             <div>
                 <router-link to="/home">Go back home</router-link>
             </div>
+            <button class="btn btn-lg btn-primary pull-right" @click="saveRepo">
+                <span class="glyphicon glyphicon-save"></span>
+                Save
+            </button>
             <h2 class="text-center">
                 {{ repo.full_name }}
             </h2>
@@ -167,11 +171,19 @@
                     } else {
                         this.commits = this.$store.state.repoCommits
                     }
-
-                console.log(this.commits)
                 }, (response) => {
                     console.log(response)
                 });
+            },
+
+            saveRepo() {
+                let savedRepos = JSON.parse(localStorage.getItem("savedRepos"))
+                if(savedRepos == null) {
+                    savedRepos = [this.repo]
+                } else {
+                    savedRepos.unshift(this.repo)
+                }
+                localStorage.setItem("savedRepos", JSON.stringify(savedRepos))
             }
         },
 
