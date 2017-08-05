@@ -4,13 +4,18 @@
             <div>
                 <router-link to="/home">Go back home</router-link>
             </div>
+
             <button class="btn btn-lg btn-primary pull-right" @click="saveRepo">
                 <span class="glyphicon glyphicon-save"></span>
                 Save
             </button>
+
+            <div class="alert alert-success notification-box" role="alert" :style="{ opacity: notificationOpacity }">Repository saved!</div>
+
             <h2 class="text-center">
                 {{ repo.full_name }}
             </h2>
+
             <div class="row">
                 <div class="col-md-2 col-md-offset-1">
                     <img :src="repo.owner.avatar_url" alt="owner-avatar" width="150" height="auto" class="img-rounded">
@@ -39,7 +44,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">List of branches</div>
@@ -68,11 +72,10 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <a :href="commitsLink" target="_blank">List of branches</a>
+                            <a :href="commitsLink" target="_blank">List of commits</a>
                         </div>
                         <div class="panel-body">
                             <ul class="list-group">
@@ -100,7 +103,8 @@
                 topics: [],
                 branches: [],
                 issues: [],
-                commits: []
+                commits: [],
+                notificationOpacity: 0
             }
         },
 
@@ -178,12 +182,22 @@
 
             saveRepo() {
                 let savedRepos = JSON.parse(localStorage.getItem("savedRepos"))
+                //Check if user already has this key
                 if(savedRepos == null) {
                     savedRepos = [this.repo]
                 } else {
                     savedRepos.unshift(this.repo)
                 }
                 localStorage.setItem("savedRepos", JSON.stringify(savedRepos))
+                //On completed save, show notification
+                this.saveSuccessful()
+            },
+
+            saveSuccessful() {
+                this.notificationOpacity = 1;
+                setTimeout(() => {
+                    this.notificationOpacity = 0;
+                }, 2000);
             }
         },
 
@@ -234,4 +248,11 @@
     .panel-row {
         margin-top: 50px;
     }
+
+    .notification-box {
+        width: 50%;
+        margin: 0 auto;
+        transition: opacity .2s linear;
+    }
+
 </style>

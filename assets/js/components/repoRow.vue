@@ -18,6 +18,7 @@
         },
 
         computed: {
+            //TODO improve date rendering
             dateCreated() {
                 return this.repoData.created_at.substr(0, 10);
             }

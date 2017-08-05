@@ -53,6 +53,7 @@
         },
 
         created() {
+            //Checking for repos in local storage
             let savedRepos = JSON.parse(localStorage.getItem("savedRepos"))
             if(savedRepos != null && savedRepos.length > 0) {
                 this.savedRepos = savedRepos;

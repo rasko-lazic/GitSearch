@@ -10,6 +10,7 @@ import store from './store'
 //Initialize VueRouter
 import routes from './routes.js'
 
+// Load configuration in router
 const router = new VueRouter({
     routes
 })

@@ -50,6 +50,7 @@
             },
 
             updatePages(page) {
+                //TODO find a more stable way to get prev/next page integer
                 let pageNum = parseInt(page)
                 let nextPageNum = pageNum + 1;
                 let prevPageNum = pageNum - 1;
@@ -63,6 +64,7 @@
             this.fetchData(this.$route.params)
         },
 
+        // Catching has change
         beforeRouteUpdate(to, from, next) {
             this.fetchData(to.params)
             next();
